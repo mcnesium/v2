@@ -197,7 +197,17 @@ func (s *Storage) Integration(userID int64) (*model.Integration, error) {
 			raindrop_enabled,
 			raindrop_token,
 			raindrop_collection_id,
-			raindrop_tags
+			raindrop_tags,
+			betula_enabled,
+			betula_url,
+			betula_token,
+			ntfy_enabled,
+			ntfy_topic,
+			ntfy_url,
+			ntfy_api_token,
+			ntfy_username,
+			ntfy_password,
+			ntfy_icon_url
 		FROM
 			integrations
 		WHERE
@@ -294,6 +304,16 @@ func (s *Storage) Integration(userID int64) (*model.Integration, error) {
 		&integration.RaindropToken,
 		&integration.RaindropCollectionID,
 		&integration.RaindropTags,
+		&integration.BetulaEnabled,
+		&integration.BetulaURL,
+		&integration.BetulaToken,
+		&integration.NtfyEnabled,
+		&integration.NtfyTopic,
+		&integration.NtfyURL,
+		&integration.NtfyAPIToken,
+		&integration.NtfyUsername,
+		&integration.NtfyPassword,
+		&integration.NtfyIconURL,
 	)
 	switch {
 	case err == sql.ErrNoRows:
@@ -398,9 +418,19 @@ func (s *Storage) UpdateIntegration(integration *model.Integration) error {
 			raindrop_enabled=$85,
 			raindrop_token=$86,
 			raindrop_collection_id=$87,
-			raindrop_tags=$88
+			raindrop_tags=$88,
+			betula_enabled=$89,
+			betula_url=$90,
+			betula_token=$91,
+			ntfy_enabled=$92,
+			ntfy_topic=$93,
+			ntfy_url=$94,
+			ntfy_api_token=$95,
+			ntfy_username=$96,
+			ntfy_password=$97,
+			ntfy_icon_url=$98
 		WHERE
-			user_id=$89
+			user_id=$99
 	`
 	_, err := s.db.Exec(
 		query,
@@ -492,6 +522,16 @@ func (s *Storage) UpdateIntegration(integration *model.Integration) error {
 		integration.RaindropToken,
 		integration.RaindropCollectionID,
 		integration.RaindropTags,
+		integration.BetulaEnabled,
+		integration.BetulaURL,
+		integration.BetulaToken,
+		integration.NtfyEnabled,
+		integration.NtfyTopic,
+		integration.NtfyURL,
+		integration.NtfyAPIToken,
+		integration.NtfyUsername,
+		integration.NtfyPassword,
+		integration.NtfyIconURL,
 		integration.UserID,
 	)
 
@@ -530,7 +570,8 @@ func (s *Storage) HasSaveEntry(userID int64) (result bool) {
 				shaarli_enabled='t' OR
 				webhook_enabled='t' OR
 				omnivore_enabled='t' OR
-				raindrop_enabled='t'
+				raindrop_enabled='t' OR
+				betula_enabled='t'
 			)
 	`
 	if err := s.db.QueryRow(query, userID).Scan(&result); err != nil {

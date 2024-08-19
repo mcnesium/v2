@@ -100,6 +100,16 @@ type IntegrationForm struct {
 	RaindropToken                    string
 	RaindropCollectionID             string
 	RaindropTags                     string
+	BetulaEnabled                    bool
+	BetulaURL                        string
+	BetulaToken                      string
+	NtfyEnabled                      bool
+	NtfyTopic                        string
+	NtfyURL                          string
+	NtfyAPIToken                     string
+	NtfyUsername                     string
+	NtfyPassword                     string
+	NtfyIconURL                      string
 }
 
 // Merge copy form values to the model.
@@ -189,6 +199,16 @@ func (i IntegrationForm) Merge(integration *model.Integration) {
 	integration.RaindropToken = i.RaindropToken
 	integration.RaindropCollectionID = i.RaindropCollectionID
 	integration.RaindropTags = i.RaindropTags
+	integration.BetulaEnabled = i.BetulaEnabled
+	integration.BetulaURL = i.BetulaURL
+	integration.BetulaToken = i.BetulaToken
+	integration.NtfyEnabled = i.NtfyEnabled
+	integration.NtfyTopic = i.NtfyTopic
+	integration.NtfyURL = i.NtfyURL
+	integration.NtfyAPIToken = i.NtfyAPIToken
+	integration.NtfyUsername = i.NtfyUsername
+	integration.NtfyPassword = i.NtfyPassword
+	integration.NtfyIconURL = i.NtfyIconURL
 }
 
 // NewIntegrationForm returns a new IntegrationForm.
@@ -281,6 +301,16 @@ func NewIntegrationForm(r *http.Request) *IntegrationForm {
 		RaindropToken:                    r.FormValue("raindrop_token"),
 		RaindropCollectionID:             r.FormValue("raindrop_collection_id"),
 		RaindropTags:                     r.FormValue("raindrop_tags"),
+		BetulaEnabled:                    r.FormValue("betula_enabled") == "1",
+		BetulaURL:                        r.FormValue("betula_url"),
+		BetulaToken:                      r.FormValue("betula_token"),
+		NtfyEnabled:                      r.FormValue("ntfy_enabled") == "1",
+		NtfyTopic:                        r.FormValue("ntfy_topic"),
+		NtfyURL:                          r.FormValue("ntfy_url"),
+		NtfyAPIToken:                     r.FormValue("ntfy_api_token"),
+		NtfyUsername:                     r.FormValue("ntfy_username"),
+		NtfyPassword:                     r.FormValue("ntfy_password"),
+		NtfyIconURL:                      r.FormValue("ntfy_icon_url"),
 	}
 }
 
